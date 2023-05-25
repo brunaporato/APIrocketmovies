@@ -1,0 +1,23 @@
+{
+  "name": "apifilmes",
+  "version": "1.0.0",
+  "description": "API created at Explorer RocketSeat for users to enter movies and gives them notes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js",
+    "migrate": "knex migrate:latest"
+  },
+  "author": "Bruna Porato",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "knex": "^2.4.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
