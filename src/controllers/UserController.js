@@ -54,6 +54,10 @@ class UserController {
       password = await hash(password, 8)
     }
 
+    if(!password) {
+      password = user[0].password
+    }
+
     await knex("users")
     .where("id", user_id)
     .update({
