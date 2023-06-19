@@ -7,7 +7,11 @@ const app = express();
 
 const routes = require("./routes");
 
+const uploadConfig = require("./configs/upload");
+
 app.use(express.json());
+
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
 
 app.use(routes);
 
