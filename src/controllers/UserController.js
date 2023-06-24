@@ -7,11 +7,19 @@ class UserController {
     const { name, email, password } = request.body;
     const hashedPassword = await hash(password, 8);
 
+    const checkEmailInUse = await knex("users").where({email}).first();
+    
+    if(checkEmailInUse) {
+      throw new AppError("This email is already in use");
+    }
+
     const [user_id] = await knex("users").insert({
       name,
       email,
       password: hashedPassword
     });
+
+
 
     return response.status(201).json();
   }
@@ -23,7 +31,7 @@ class UserController {
     const user = await knex("users").where("id", user_id)
     
     if(!user) {
-      throw new AppError("User not found.");
+      throw new AppError("User not found");
     }
 
     const userWithUpdatedEmail = await knex("users").where("email", email);
@@ -41,14 +49,14 @@ class UserController {
     }
 
     if(password && !old_password) {
-      throw new AppError("You need to enter the old password");
+      throw new AppError("You need to enter your current password");
     }
 
     if (password && old_password) {
       const checkOldPassword = await compare(old_password, user[0].password);
 
       if(!checkOldPassword) {
-        throw new AppError("Wrong old password");
+        throw new AppError("Current password doesn't match");
       }
 
       password = await hash(password, 8)
