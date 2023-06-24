@@ -6,7 +6,7 @@ function ensureAuthenticated(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if(!authHeader) {
-    throw new AppError("JWT não informado", 401);
+    throw new AppError("JWT doesn't exist", 401);
   }
 
   const [, token] = authHeader.split(" ");
@@ -20,7 +20,7 @@ function ensureAuthenticated(req, res, next) {
 
     return next();
   } catch {
-    throw new AppError("JWT inválido", 401);
+    throw new AppError("JWT invalid", 401);
   }
 }
 
